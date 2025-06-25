@@ -108,9 +108,10 @@ swap      - 1 GB
 sudo apt update && sudo apt upgrade -y
 
 # Instalar herramientas básicas
-sudo apt install -y vim curl wget net-tools htop tree \
-    software-properties-common apt-transport-https \
-    ca-certificates gnupg lsb-release
+sudo apt install -y vim curl wget git net-tools htop tree \
+    software-properties-common apt-transport-https nano \
+    ca-certificates gnupg lsb-release iptables-persistent \ 
+    openssh-server sudo build-essential dkms linux-headers-$(uname -r)
 ```
 
 #### 2.3.2 Configuración de Red Estática
