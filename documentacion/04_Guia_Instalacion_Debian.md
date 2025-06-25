@@ -779,5 +779,3 @@ tar -czf $BACKUP_FILE \
 
 echo "Backup completed: $BACKUP_FILE"
 ```
-
-Esta guía te proporciona una base sólida para implementar tu proyecto de ciberseguridad. ¿Te gustaría que continúe con los scripts específicos para algún componente en particular o prefieres que desarrolle otra sección como el plan de respuesta a incidentes?
