@@ -1,8 +1,6 @@
 # Sistema Integral de Ciberseguridad FEI
 
-![Estado del Proyect| **IDS/IPS** | VM7 | 10.10.30.20 | Detección de intrusiones en red | ✅ Funcionando |
-| **Servidor VPN** | VM8 | 10.10.20.30 | Acceso remoto seguro | ✅ Funcionando |
-| **Servidor Auth** | VM9 | 10.10.20.40 | Autenticación centralizada | ✅ Funcionando |https://img.shields.io/badge/Estado-Completado-success)
+![Estado del Proyecto](https://img.shields.io/badge/Estado-Completado-success)
 ![NIST CSF](https://img.shields.io/badge/Framework-NIST%20CSF%202.0-blue)
 ![Plataforma](https://img.shields.io/badge/Plataforma-Debian%2012-orange)
 ![Virtualización](https://img.shields.io/badge/Virtualización-VMware%20Workstation-green)
