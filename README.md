@@ -57,7 +57,7 @@ Internet
 | Componente | VM | IP | Función | Estado |
 |------------|----|----|---------|--------|
 | **Router Gateway** | VM1 | 192.168.1.1 | Simulación de conexión a Internet | ✅ Funcionando |
-| **Firewall Principal** | VM2 | Múltiples | Segmentación y filtrado de red | ✅ Funcionando |
+| **Firewall Principal** | VM2 | 192.168.1.2<br/>10.10.10.1<br/>10.10.20.1<br/>10.10.30.1 | Segmentación y filtrado de red | ✅ Funcionando |
 | **Servidor Web** | VM3 | 10.10.10.10 | Portal institucional con hardening | ✅ Funcionando |
 | **Honeypot** | VM4 | 10.10.10.20 | Detección de intrusiones | ✅ Funcionando |
 | **Proxy Web** | VM5 | 10.10.20.10 | Filtrado de contenido y control | ✅ Funcionando |
@@ -124,9 +124,9 @@ Internet
 ## 📁 Estructura del Proyecto
 
 ```
-Sistema_Ciberseguridad_FEI-alt/
+Sistema_Ciberseguridad_FEI/
 ├── 📄 README.md                              # Este archivo
-├── 📄 proyecto_ciberseguridad_fei.md         # Especificaciones originales
+├── 📄 RÚBRICA_proyecto_ciberseguridad_fei.md # Especificaciones del proyecto
 ├── 📁 documentacion/
 │   ├── 📄 01_Arquitectura_de_Red.md          # Diseño técnico detallado
 │   ├── 📄 02_Analisis_de_Riesgos.md          # Matriz de riesgos NIST SP 800-30
@@ -166,7 +166,9 @@ Sistema_Ciberseguridad_FEI-alt/
 
 ### Instalación Paso a Paso
 
-#### 1️⃣ Preparación del Entorno
+**Tiempo estimado total: 12-16 horas**
+
+#### 1️⃣ Preparación del Entorno (45-60 minutos)
 ```bash
 # 1. Configurar redes virtuales en VMware
 # 2. Crear VM base con Debian 12
@@ -174,9 +176,14 @@ Sistema_Ciberseguridad_FEI-alt/
 # 4. Crear snapshot "Base-Clean"
 ```
 
-#### 2️⃣ Implementación de Componentes
+#### 2️⃣ Implementación de Componentes (4-6 horas)
 ```bash
 # Clonar VMs desde base y ejecutar scripts de configuración
+# Requisitos de RAM por VM:
+# VM1-Router: 2GB, VM2-Firewall: 4GB, VM3-WebServer: 2GB
+# VM4-Honeypot: 2GB, VM5-Proxy: 2GB, VM6-SIEM: 8GB
+# VM7-IDS: 4GB, VM8-VPN: 2GB, VM9-Auth: 2GB
+# VM10-AdminWS: 2GB, VM11-UserWS: 2GB
 
 # VM2 - Firewall Principal
 ./scripts/configure-firewall.sh
@@ -365,7 +372,7 @@ vpn-client-manager.sh     # Tests VPN
 - **Institución**: Universidad Veracruzana - FEI
 - **Proyecto**: Sistema Integral de Ciberseguridad
 - **Email**: [correo del equipo]
-- **Repositorio**: Sistema_Ciberseguridad_FEI-alt
+- **Repositorio**: Sistema_Ciberseguridad_FEI
 
 ### Soporte Técnico
 Para consultas sobre implementación, configuración o extensión del proyecto:

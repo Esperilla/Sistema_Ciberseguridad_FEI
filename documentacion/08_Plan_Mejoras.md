@@ -2,6 +2,14 @@
 
 ## 🚨 **Mejoras Críticas (Prioridad Alta)**
 
+### 1. Completar Evidencias Prácticas
+**Status**: ❌ Crítico
+**Descripción**: Los directorios `evidencias/` y `configuraciones/` están vacíos
+**Acciones requeridas**:
+- [ ] Capturar screenshots de todos los componentes funcionando
+- [ ] Exportar configuraciones reales de cada servicio
+- [ ] Documentar logs de pruebas de penetración
+- [ ] Crear reportes de incidentes simulados
 
 ### 2. Integración Completa VPN y Autenticación
 **Status**: ⚠️ Parcial
