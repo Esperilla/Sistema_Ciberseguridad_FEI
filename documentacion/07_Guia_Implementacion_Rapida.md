@@ -65,12 +65,6 @@ apt install -y curl wget git vim nano htop net-tools \
 # Configurar sudoers
 usermod -aG sudo admin
 
-# Instalar VMware Tools (opcional pero recomendado)
-# mount /dev/cdrom /mnt
-# cp /mnt/VMwareTools-*.tar.gz /tmp/
-# tar -xzf /tmp/VMwareTools-*.tar.gz -C /tmp/
-# cd /tmp/vmware-tools-distrib && ./vmware-install.pl -d
-
 # Crear snapshot "Base-Clean"
 # VM → Snapshot → Take Snapshot → "Base-Clean"
 ```
