@@ -1,9 +1,18 @@
-# Guía de Instalación y Configuración - Debian 12
+# Manual de Referencia Técnica - Configuraciones Detalladas de Debian 12
 
-## 1. Preparación del Entorno VMware
+## 📋 Propósito de este Documento
+**Este manual es una REFERENCIA TÉCNICA detallada** para administradores que necesitan:
+- Configurar manualmente cada componente
+- Entender el funcionamiento interno de cada servicio
+- Personalizar configuraciones según necesidades específicas
+- Resolver problemas técnicos complejos
+
+**Para implementación rápida con scripts automatizados, consultar:** `07_Guia_Implementacion_Rapida.md`
+
+---
 
 ### 1.1 Requisitos del Sistema Host
-- **VMware Workstation Pro 17** o superior
+- **VMware Workstation**
 - **RAM**: Mínimo 16 GB (recomendado 32 GB)
 - **Almacenamiento**: 500 GB disponibles
 - **CPU**: Procesador con soporte de virtualización (VT-x/AMD-V)

@@ -1,6 +1,15 @@
-# Guía de Implementación Paso a Paso - Sistema Ciberseguridad FEI
+# Guía de Despliegue Automatizado - Sistema Ciberseguridad FEI
 
-## 📋 Información General
+## 📋 Propósito de este Documento
+**Esta guía está diseñada para IMPLEMENTACIÓN RÁPIDA** usando scripts automatizados:
+- Despliegue en 8-12 horas usando scripts pre-configurados
+- Mínima intervención manual requerida
+- Validación automática de configuraciones
+- Ideal para demostraciones y entornos de prueba
+
+**Para configuración manual detallada y troubleshooting avanzado, consultar:** `04_Guia_Instalacion_Debian.md`
+
+---
 
 **Proyecto:** Sistema Integral de Ciberseguridad para la Facultad de Estadística e Informática  
 **Framework:** NIST Cybersecurity Framework 2.0  
