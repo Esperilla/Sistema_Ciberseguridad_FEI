@@ -16,7 +16,7 @@
 - **Red:** Conexión a Internet estable
 
 ### Software Requerido
-- **VMware Workstation Pro 17+** (versión completa, no Player)
+- **VMware Workstation** (versión completa, no Player)
 - **Debian 12 ISO** descargada desde sitio oficial
 - **Acceso administrativo** al sistema host
 
@@ -40,9 +40,9 @@
 ```bash
 # Configuración VM Base:
 # - Memoria: 2 GB
-# - Disco: 40 GB (dinámico)
+# - Disco: 30 GB (dinámico)
 # - Red: VMnet1 (temporal para instalación)
-# - Sistema: Debian 12 netinst
+# - Sistema: Debian 12 bookworm
 
 # Instalación básica de Debian:
 # - Particionado: LVM con /boot separado
