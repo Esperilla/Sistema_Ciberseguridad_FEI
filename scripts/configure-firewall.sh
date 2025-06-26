@@ -301,6 +301,10 @@ iface ens39 inet static
     netmask 255.255.255.0
 EOF
 
+# Configurar hostname
+echo "firewall-fei" > /etc/hostname
+echo "127.0.0.1 firewall-fei firewall-fei.fei.local" >> /etc/hosts
+
 # Crear script de monitoreo del firewall
 log "Creando script de monitoreo..."
 cat > /usr/local/bin/firewall-monitor.sh << 'EOF'
