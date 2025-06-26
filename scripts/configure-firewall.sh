@@ -113,20 +113,20 @@ iptables -A FORWARD -p tcp -s 10.10.20.0/24 -d 10.10.20.40 --dport 636 -j ACCEPT
 
 # === REGLAS DE NAT ===
 # NAT para DMZ
-iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -o ens33 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -o ens36 -j MASQUERADE
 
 # NAT para LAN Interna
-iptables -t nat -A POSTROUTING -s 10.10.20.0/24 -o ens33 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 10.10.20.0/24 -o ens36 -j MASQUERADE
 
 # NAT para Red de Gestión
-iptables -t nat -A POSTROUTING -s 10.10.30.0/24 -o ens33 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 10.10.30.0/24 -o ens36 -j MASQUERADE
 
 # === PORT FORWARDING (DNAT) ===
 # Redirigir HTTP hacia servidor web
-iptables -t nat -A PREROUTING -i ens33 -p tcp --dport 80 -j DNAT --to-destination 10.10.10.10:80
+iptables -t nat -A PREROUTING -i ens36 -p tcp --dport 80 -j DNAT --to-destination 10.10.10.10:80
 
 # Redirigir HTTPS hacia servidor web
-iptables -t nat -A PREROUTING -i ens33 -p tcp --dport 443 -j DNAT --to-destination 10.10.10.10:443
+iptables -t nat -A PREROUTING -i ens36 -p tcp --dport 443 -j DNAT --to-destination 10.10.10.10:443
 
 # === PROTECCIÓN CONTRA ATAQUES ===
 # Protección contra port scanning
@@ -274,28 +274,28 @@ auto lo
 iface lo inet loopback
 
 # WAN - Conexión hacia router
-auto ens33
-iface ens33 inet static
+auto ens36
+iface ens36 inet static
     address 192.168.1.2
     netmask 255.255.255.0
     gateway 192.168.1.1
     dns-nameservers 8.8.8.8 8.8.4.4
 
 # DMZ - Red desmilitarizada
-auto ens38
-iface ens38 inet static
+auto ens37
+iface ens37 inet static
     address 10.10.10.1
     netmask 255.255.255.0
 
 # LAN - Red interna
-auto ens37
-iface ens37 inet static
+auto ens38
+iface ens38 inet static
     address 10.10.20.1
     netmask 255.255.255.0
 
 # Management - Red de gestión
-auto ens38
-iface ens38 inet static
+auto ens39
+iface ens39 inet static
     address 10.10.30.1
     netmask 255.255.255.0
 EOF
