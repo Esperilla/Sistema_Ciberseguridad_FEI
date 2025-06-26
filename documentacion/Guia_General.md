@@ -161,8 +161,8 @@ sudo apt update && sudo apt upgrade -y
 
 # Instalar herramientas básicas
 sudo apt install -y vim curl wget git net-tools htop tree \
-    software-properties-common apt-transport-https nano \
-    ca-certificates gnupg lsb-release iptables-persistent \
+    software-properties-common apt-transport-https nano isc-dhcp-server \
+    ca-certificates gnupg lsb-release iptables-persistent rsyslog \
     openssh-server sudo build-essential dkms linux-headers-$(uname -r)
 
 # Configurar SSH seguro
