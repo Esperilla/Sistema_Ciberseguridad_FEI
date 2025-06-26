@@ -275,7 +275,7 @@ auto lo
 iface lo inet loopback
 
 auto ens33
-iface ens33 inet static
+iface ens33 inet dhcp
 
 # WAN - Conexión hacia router
 auto ens36
