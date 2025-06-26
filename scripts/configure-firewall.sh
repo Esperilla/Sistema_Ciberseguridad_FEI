@@ -274,9 +274,6 @@ cat > /etc/network/interfaces << 'EOF'
 auto lo
 iface lo inet loopback
 
-auto ens33
-iface ens33 inet dhcp
-
 # WAN - Conexión hacia router
 auto ens36
 iface ens36 inet static
