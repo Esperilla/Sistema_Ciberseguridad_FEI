@@ -222,8 +222,8 @@ auto ens33
 iface ens33 inet dhcp
 
 # Interfaz LAN
-auto ens34  
-iface ens34 inet static
+auto ens36  
+iface ens36 inet static
     address 192.168.1.1
     netmask 255.255.255.0
 ```
@@ -239,8 +239,8 @@ sudo apt install -y iptables-persistent
 
 # Configurar reglas de NAT
 sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
-sudo iptables -A FORWARD -i ens34 -o ens33 -j ACCEPT
-sudo iptables -A FORWARD -i ens33 -o ens34 -m state --state RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -i ens36 -o ens33 -j ACCEPT
+sudo iptables -A FORWARD -i ens33 -o ens36 -m state --state RELATED,ESTABLISHED -j ACCEPT
 
 # Guardar reglas
 sudo iptables-save | sudo tee /etc/iptables/rules.v4
@@ -267,7 +267,7 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
 }
 
 # Configurar interfaz para DHCP
-echo 'INTERFACESv4="ens34"' | sudo tee /etc/default/isc-dhcp-server
+echo 'INTERFACESv4="ens36"' | sudo tee /etc/default/isc-dhcp-server
 
 # Iniciar servicio
 sudo systemctl enable isc-dhcp-server
