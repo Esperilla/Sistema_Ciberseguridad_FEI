@@ -39,7 +39,8 @@ apt update && apt upgrade -y
 
 # Instalar herramientas necesarias
 log "Instalando herramientas necesarias..."
-apt install -y iptables-persistent netfilter-persistent fail2ban ufw rsyslog curl wget vim
+apt remove -y ufw
+apt install -y iptables-persistent netfilter-persistent fail2ban rsyslog curl wget vim
 
 # Habilitar forwarding de IP
 log "Habilitando IP forwarding..."
