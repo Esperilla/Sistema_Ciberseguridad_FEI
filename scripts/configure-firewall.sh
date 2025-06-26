@@ -282,20 +282,20 @@ iface ens33 inet static
     dns-nameservers 8.8.8.8 8.8.4.4
 
 # DMZ - Red desmilitarizada
-auto ens34
-iface ens34 inet static
+auto ens38
+iface ens38 inet static
     address 10.10.10.1
     netmask 255.255.255.0
 
 # LAN - Red interna
-auto ens35
-iface ens35 inet static
+auto ens37
+iface ens37 inet static
     address 10.10.20.1
     netmask 255.255.255.0
 
 # Management - Red de gestión
-auto ens36
-iface ens36 inet static
+auto ens38
+iface ens38 inet static
     address 10.10.30.1
     netmask 255.255.255.0
 EOF
