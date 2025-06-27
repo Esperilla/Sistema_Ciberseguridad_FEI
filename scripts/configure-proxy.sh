@@ -45,16 +45,26 @@ apt update && apt upgrade -y
 # Instalar Squid y herramientas relacionadas
 log "Instalando Squid y herramientas de filtrado..."
 
-# Verificar y remover UFW si causa conflictos
-if dpkg -l | grep -q "^ii.*ufw"; then
-    warn "UFW detectado. Verificando compatibilidad..."
-fi
-
 apt install -y squid squidguard squid-langpack apache2-utils \
     fail2ban rsyslog logrotate \
     curl wget dnsutils net-tools htop openssl
 
+# Configurar red estática
+log "Configurando interfaz de red..."
+cat > /etc/network/interfaces << 'EOF'
+# Configuración de red para Servidor Proxy FEI
 
+auto lo
+iface lo inet loopback
+
+# Interfaz LAN
+auto ens36
+iface ens36 inet static
+    address 10.10.20.10
+    netmask 255.255.255.0
+    gateway 10.10.20.1
+    dns-nameservers 8.8.8.8 8.8.4.4
+EOF
 
 # Configurar hostname
 echo "proxy-fei" > /etc/hostname
@@ -753,7 +763,7 @@ fi
 
 systemctl enable fail2ban
 systemctl restart fail2ban
-#systemctl restart networking
+systemctl restart networking
 
 # Esperar a que Squid inicie completamente
 log "Esperando que Squid inicie completamente..."
