@@ -905,7 +905,7 @@ main() {
     
     # Iniciar servicios
     log_message "Iniciando servicios..."
-    systemctl restart networking
+    #systemctl restart networking
     systemctl enable cowrie
     systemctl restart cowrie
     if systemctl is-enabled dionaea >/dev/null 2>&1; then
