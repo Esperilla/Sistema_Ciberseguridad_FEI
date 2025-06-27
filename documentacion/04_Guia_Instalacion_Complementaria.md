@@ -1,4 +1,4 @@
-# Guía de Instalación y Configuración
+# Guía de Instalación y Configuración Complementaria
 
 ## 📋 Propósito de este Documento
 **Este manual es una REFERENCIA TÉCNICA detallada** para administradores que necesitan:
@@ -6,9 +6,6 @@
 - Entender el funcionamiento interno de cada servicio
 - Personalizar configuraciones según necesidades específicas
 - Resolver problemas técnicos complejos
-
-**Para implementación rápida con scripts automatizados, consultar:** `07_Guia_Implementacion_Rapida.md`
-
 ---
 
 ### 1.1 Requisitos del Sistema Host

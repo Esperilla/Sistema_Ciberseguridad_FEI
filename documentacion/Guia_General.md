@@ -1,4 +1,4 @@
-# Guía Unificada de Implementación - Sistema Ciberseguridad FEI
+# Guía General de Implementación - Sistema Ciberseguridad FEI
 
 ## 📋 Información General
 
@@ -9,7 +9,7 @@
 
 ## 🎯 Modalidades de Implementación
 
-Esta guía unificada ofrece dos enfoques complementarios para implementar el sistema:
+Esta guía general ofrece dos enfoques complementarios para implementar el sistema:
 
 ### 🚀 Modalidad A: Implementación Automatizada (8-10 horas)
 **Para usuarios que prefieren deployment rápido:**
