@@ -116,7 +116,7 @@ install_dependencies() {
 }
 
 # Configurar red estática
-log "Configurando interfaz de red..."
+log_message "Configurando interfaz de red..."
 cat > /etc/network/interfaces << 'EOF'
 # Configuración de red para Honeypot
 
@@ -130,7 +130,7 @@ iface ens33 inet dhcp
 # Interfaz DMZ
 auto ens36
 iface ens36 inet static
-    address 10.10.10.10
+    address 10.10.10.20
     netmask 255.255.255.0
     gateway 10.10.10.1
     dns-nameservers 8.8.8.8 8.8.4.4
