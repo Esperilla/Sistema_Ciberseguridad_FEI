@@ -122,6 +122,8 @@ http.cors.allow-headers: "Authorization, X-Requested-With, Content-Length, Conte
 EOF
 
 # Configurar límites de memoria para Elasticsearch
+log "Configurando memoria heap de Elasticsearch..."
+mkdir -p /etc/elasticsearch/jvm.options.d/
 cat > /etc/elasticsearch/jvm.options.d/heap.options << 'EOF'
 # Configuración de heap para Elasticsearch
 # Asignar 1GB (ajustar según RAM disponible)
@@ -139,6 +141,11 @@ EOF
 # Instalar Logstash
 log "Instalando Logstash..."
 apt install -y logstash
+
+# Crear directorios necesarios para Logstash
+mkdir -p /etc/logstash/conf.d/
+mkdir -p /etc/logstash/jvm.options.d/
+mkdir -p /var/log/logstash/
 
 # Configurar Logstash
 log "Configurando Logstash..."
@@ -317,6 +324,8 @@ output {
 EOF
 
 # Configurar heap de Logstash
+log "Configurando memoria heap de Logstash..."
+mkdir -p /etc/logstash/jvm.options.d/
 cat > /etc/logstash/jvm.options.d/heap.options << 'EOF'
 # Configuración de heap para Logstash
 -Xms512m
