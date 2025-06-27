@@ -76,7 +76,8 @@ install_dependencies() {
         build-essential \
         libssl-dev \
         libffi-dev \
-        libmysqlclient-dev \
+        libmariadb-dev \
+        libmariadb-dev-compat \
         libsqlite3-dev \
         libevent-dev \
         libglib2.0-dev \
@@ -93,9 +94,7 @@ install_dependencies() {
         libudns-dev \
         libcap-dev \
         libcurl4-openssl-dev \
-        libemu-dev \
         libpcap-dev \
-        liblcfg-dev \
         libgcrypt20-dev \
         libreadline-dev \
         libnl-3-dev \
@@ -119,10 +118,14 @@ install_dependencies() {
 # Configurar red estática
 log "Configurando interfaz de red..."
 cat > /etc/network/interfaces << 'EOF'
-# Configuración de red para Servidor Web FEI
+# Configuración de red para Honeypot
 
 auto lo
 iface lo inet loopback
+
+# Interfaz principal
+allow-hotplug ens33
+iface ens33 inet dhcp
 
 # Interfaz DMZ
 auto ens36
@@ -902,6 +905,8 @@ main() {
     
     # Iniciar servicios
     log_message "Iniciando servicios..."
+    systemctl restart networking
+    systemctl enable cowrie
     systemctl restart cowrie
     if systemctl is-enabled dionaea >/dev/null 2>&1; then
         systemctl restart dionaea
