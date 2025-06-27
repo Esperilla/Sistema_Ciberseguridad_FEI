@@ -1,6 +1,5 @@
 # Sistema Integral de Ciberseguridad FEI
 
-![Estado del Proyecto](https://img.shields.io/badge/Estado-Completado-success)
 ![NIST CSF](https://img.shields.io/badge/Framework-NIST%20CSF%202.0-blue)
 ![Plataforma](https://img.shields.io/badge/Plataforma-Debian%2012-orange)
 ![Virtualización](https://img.shields.io/badge/Virtualización-VMware%20Workstation-green)
@@ -8,9 +7,9 @@
 ## 📋 Información General
 
 **Proyecto:** Diseño e Implementación de un Sistema Integral de Ciberseguridad para la Facultad de Estadística e Informática (FEI) basado en el NIST Cybersecurity Framework 2.0
-
 **Institución:** Universidad Veracruzana - Facultad de Estadística e Informática  
-**Programa:** Licenciatura en Redes y Servicios de Cómputo  
+**Alumno:** Emmanuel Alexis Esperilla Castro
+**Programa:** Licenciatura en Ingeniería en CIberseguridad
 **Materia:** Ciberseguridad  
 **Período:** Febrero-Julio 2025
 
@@ -61,12 +60,12 @@ Internet
 | **Servidor Web** | VM3 | 10.10.10.10 | Portal institucional con hardening | ✅ Funcionando |
 | **Honeypot** | VM4 | 10.10.10.20 | Detección de intrusiones | ✅ Funcionando |
 | **Proxy Web** | VM5 | 10.10.20.10 | Filtrado de contenido y control | ✅ Funcionando |
-| **SIEM** | VM6 | 10.10.30.10 | Monitoreo y análisis centralizado | ✅ Funcionando |
+| **SIEM** | VM6 | 10.10.30.10 | Monitoreo y análisis centralizado | ⚠️ Incompleto |
 | **IDS/IPS** | VM7 | 10.10.30.20 | Detección de intrusiones en red | ✅ Funcionando |
-| **Servidor VPN** | VM8 | 10.10.20.30 | Acceso remoto seguro | ⚠️ Básico |
-| **Servidor Auth** | VM9 | 10.10.20.40 | Autenticación centralizada | ⚠️ Básico |
-| **Estación Admin** | VM10 | 10.10.30.50 | Administración del sistema | ✅ Funcionando |
-| **Estación Usuario** | VM11 | 10.10.20.50 | Simulación de usuario final | ✅ Funcionando |
+| **Servidor VPN** | VM8 | 10.10.20.30 | Acceso remoto seguro | ❌ No funciona |
+| **Servidor Auth** | VM9 | 10.10.20.40 | Autenticación centralizada | ❌ No funciona |
+| **Estación Admin** | VM10 | 10.10.30.50 | Administración del sistema | ❌ No funciona |
+| **Estación Usuario** | VM11 | 10.10.20.50 | Simulación de usuario final | ❌ No funciona |
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -151,9 +150,7 @@ Sistema_Ciberseguridad_FEI/
 ├── 📁 evidencias/
 │   ├── 📁 capturas/                          # Screenshots de configuraciones
 │   ├── 📁 logs/                              # Evidencias de funcionamiento
-│   └── 📁 incidentes/                        # Simulaciones realizadas
-└── 📁 bitacora/
-    └── 📄 06_Bitacora_Trabajo.md             # Registro completo de actividades
+├── └── 📁 incidentes/                        # Simulaciones realizadas
 ```
 
 ## 🚀 Guía de Implementación Rápida
@@ -341,7 +338,6 @@ vpn-client-manager.sh     # Tests VPN
 - ✅ **Procedimientos detallados** para respuesta a incidentes
 - ✅ **Guía de implementación** paso a paso completa
 - ✅ **Scripts automatizados** para todos los componentes
-- ✅ **Bitácora completa** con registro detallado de actividades
 - ✅ **Evidencias sólidas** de funcionamiento y pruebas
 - ✅ **Comandos útiles** para administración y troubleshooting
 
@@ -394,5 +390,5 @@ Este proyecto ha sido desarrollado con fines académicos para la Universidad Ver
 **Proyecto desarrollado bajo el marco NIST Cybersecurity Framework 2.0**
 
 ![Universidad Veracruzana](https://img.shields.io/badge/Universidad-Veracruzana-red)
+
 ![FEI](https://img.shields.io/badge/Facultad-Estadística%20e%20Informática-blue)
-![Proyecto Completado](https://img.shields.io/badge/Proyecto-Completado%20Exitosamente-success)

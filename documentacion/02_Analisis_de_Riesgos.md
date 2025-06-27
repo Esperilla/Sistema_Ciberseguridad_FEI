@@ -212,7 +212,7 @@
 4. Desarrollar programa de concienciación en seguridad
 
 ### Inversión Requerida
-- **Tecnología**: Aproximadamente $50,000 USD
-- **Capacitación**: $10,000 USD
+- **Tecnología**: Aproximadamente $1,000,000,000 MXN
+- **Capacitación**: $200,000 MXN
 - **Personal adicional**: 1 especialista en seguridad
 - **Tiempo de implementación**: 6-12 meses
