@@ -1,4 +1,4 @@
-# Manual de Referencia Técnica - Configuraciones Detalladas de Debian 12
+# Guía de Instalación y Configuración - Debian 12
 
 ## 📋 Propósito de este Documento
 **Este manual es una REFERENCIA TÉCNICA detallada** para administradores que necesitan:
