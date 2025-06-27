@@ -1,18 +1,7 @@
 #!/bin/bash
 
-##############################################################################
 # Script de Configuración Servidor de Autenticación - Sistema Ciberseguridad FEI
-# 
-# Descripción: Instalación y configuración de OpenLDAP con integración
-#              de autenticación centralizada para el entorno FEI
-# 
-# Autor: Proyecto Ciberseguridad FEI
-# Fecha: 2025
-# Versión: 1.0
-# Sistema: Debian 12 (VM9 - 10.10.20.40)
-##############################################################################
 
-# Colores para output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -1140,5 +1129,4 @@ main() {
     log_message "Configuración del servidor de autenticación completada"
 }
 
-# Ejecutar función principal
 main "$@"

@@ -1,8 +1,5 @@
 #!/bin/bash
 # Script de configuración automatizada para Firewall FEI
-# Autor: Proyecto Ciberseguridad FEI
-# Fecha: 2025
-# Descripción: Configura iptables como firewall principal
 
 set -e
 

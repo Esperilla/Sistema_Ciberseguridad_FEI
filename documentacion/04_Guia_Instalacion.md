@@ -1,4 +1,4 @@
-# Guía de Instalación y Configuración - Debian 12
+# Guía de Instalación y Configuración
 
 ## 📋 Propósito de este Documento
 **Este manual es una REFERENCIA TÉCNICA detallada** para administradores que necesitan:

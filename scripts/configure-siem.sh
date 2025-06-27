@@ -1,9 +1,6 @@
 #!/bin/bash
-# Script de configuración automatizada para SIEM FEI (ELK Stack)
-# Autor: Proyecto Ciberseguridad FEI
-# Fecha: 2025
-# Descripción: Instala y configura Elasticsearch, Logstash y Kibana para monitoreo centralizado
 
+# Script de configuración automatizada para SIEM FEI 
 set -e
 
 # Colores para output
@@ -71,7 +68,22 @@ apt install -y openjdk-17-jdk curl wget apt-transport-https ufw gnupg
 echo 'JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64' >> /etc/environment
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
+# Configurar red estática
+log "Configurando interfaz de red..."
+cat > /etc/network/interfaces << 'EOF'
+# Configuración de red para Servidor SIEM FEI
 
+auto lo
+iface lo inet loopback
+
+# Interfaz de gestión
+auto ens36
+iface ens36 inet static
+    address 10.10.30.10
+    netmask 255.255.255.0
+    gateway 10.10.30.1
+    dns-nameservers 8.8.8.8 8.8.4.4
+EOF
 
 # Configurar hostname
 echo "siem-fei" > /etc/hostname
@@ -668,7 +680,7 @@ systemctl enable kibana
 systemctl enable filebeat
 
 # Reiniciar red
-#systemctl restart networking
+systemctl restart networking
 
 # Iniciar servicios en orden
 log "Iniciando servicios ELK..."

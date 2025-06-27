@@ -1,18 +1,7 @@
 #!/bin/bash
 
-##############################################################################
 # Script de Configuración IDS/IPS (Suricata) - Sistema Ciberseguridad FEI
-# 
-# Descripción: Instalación y configuración de Suricata como sistema
-#              de detección y prevención de intrusiones
-# 
-# Autor: Proyecto Ciberseguridad FEI
-# Fecha: 2025
-# Versión: 1.0
-# Sistema: Debian 12 (VM7 - 10.10.30.20)
-##############################################################################
 
-# Colores para output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'

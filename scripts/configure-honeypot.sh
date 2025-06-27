@@ -1,18 +1,7 @@
 #!/bin/bash
 
-##############################################################################
 # Script de Configuración Honeypot - Sistema Ciberseguridad FEI
-# 
-# Descripción: Instalación y configuración de Cowrie y Dionaea como honeypots
-#              para detección temprana de ataques
-# 
-# Autor: Proyecto Ciberseguridad FEI
-# Fecha: 2025
-# Versión: 1.0
-# Sistema: Debian 12 (VM4 - 10.10.10.20)
-##############################################################################
 
-# Colores para output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'

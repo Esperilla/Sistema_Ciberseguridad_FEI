@@ -278,8 +278,7 @@ vpn-client-manager.sh     # Tests VPN
 | **Conexión VPN no autorizada** | ✅ RADIUS rechaza | Inmediato | 100% |
 
 ### Evidencias Documentadas
-- 📸 **80+ capturas de pantalla** de configuraciones y funcionamiento
-- 📄 **Logs completos** de todos los eventos simulados y reales
+- 📸 **Capturas de pantalla** de configuraciones y funcionamiento
 - 📊 **Dashboards de Kibana** con análisis en tiempo real
 - ⚙️ **Configuraciones exportadas** de todos los servicios
 - 🔐 **Certificados y claves** de VPN y servicios SSL
@@ -371,10 +370,10 @@ vpn-client-manager.sh     # Tests VPN
 ### Información de Contacto
 - **Institución**: Universidad Veracruzana - FEI
 - **Proyecto**: Sistema Integral de Ciberseguridad
-- **Email**: [correo del equipo]
+- **Email**: [contacto@gmail.com]
 - **Repositorio**: Sistema_Ciberseguridad_FEI
 
-### Soporte Técnico
+### Soporte
 Para consultas sobre implementación, configuración o extensión del proyecto:
 1. Revisar la documentación en la carpeta `documentacion/`
 2. Consultar los scripts de automatización en `scripts/`
@@ -397,79 +396,3 @@ Este proyecto ha sido desarrollado con fines académicos para la Universidad Ver
 ![Universidad Veracruzana](https://img.shields.io/badge/Universidad-Veracruzana-red)
 ![FEI](https://img.shields.io/badge/Facultad-Estadística%20e%20Informática-blue)
 ![Proyecto Completado](https://img.shields.io/badge/Proyecto-Completado%20Exitosamente-success)
-
-## 🛠️ Comandos Útiles de Administración
-
-### Monitoreo General del Sistema
-```bash
-# Monitor en tiempo real de todo el sistema
-./scripts/monitor-integral.sh monitor
-
-# Estado resumido de todos los servicios
-./scripts/monitor-integral.sh status
-
-# Verificación completa una sola vez
-./scripts/monitor-integral.sh check
-
-# Generar reporte de seguridad diario
-./scripts/monitor-integral.sh report
-```
-
-### Gestión de Servicios Específicos
-```bash
-# Monitoreo de IDS/IPS
-/usr/local/bin/suricata-monitor.sh          # Monitor en tiempo real
-/usr/local/bin/suricata-analysis.sh         # Análisis de alertas
-
-# Gestión de VPN
-/usr/local/bin/vpn-monitor.sh               # Monitor conexiones VPN
-/usr/local/bin/vpn-client-manager.sh list   # Listar clientes VPN
-/usr/local/bin/vpn-client-manager.sh create nuevo_usuario
-
-# Monitoreo de Honeypots
-/usr/local/bin/honeypot-monitor.sh          # Monitor ataques en tiempo real
-/usr/local/bin/honeypot-analysis.sh         # Análisis de patrones de ataque
-
-# Gestión de Autenticación
-/usr/local/bin/ldap-user-manager.sh list-users     # Listar usuarios LDAP
-/usr/local/bin/ldap-user-manager.sh add-user <uid> <nombre> <apellido> <email> <grupo>
-/usr/local/bin/auth-monitor.sh              # Monitor servicios de autenticación
-```
-
-### Verificación de Conectividad y Servicios
-```bash
-# Verificar servicios web
-curl -I http://10.10.10.10                  # Servidor web principal
-curl -I http://10.10.10.20:8080            # Honeypot web
-
-# Verificar proxy
-curl --proxy 10.10.20.10:3128 -I google.com
-
-# Verificar SIEM
-curl -X GET "10.10.30.10:9200/_cluster/health?pretty"   # Elasticsearch
-curl -I http://10.10.30.10:5601            # Kibana
-
-# Verificar autenticación LDAP
-ldapsearch -x -H ldap://10.10.20.40 -b "dc=fei,dc=uv,dc=mx" "(objectClass=person)"
-
-# Verificar RADIUS
-radtest admin.fei password 10.10.20.40 0 FEI_Radius_Secret_2025!
-```
-
-### Análisis de Logs y Alertas
-```bash
-# Ver alertas de IDS/IPS en tiempo real
-tail -f /var/log/suricata/fast.log
-
-# Ver intentos de acceso a honeypot
-tail -f /home/cowrie/cowrie/var/log/cowrie/cowrie.log
-
-# Ver logs de autenticación
-tail -f /var/log/auth-services/freeradius.log
-
-# Ver conexiones VPN activas
-cat /var/log/openvpn/status.log | grep "CLIENT_LIST"
-
-# Ver estadísticas de proxy
-tail -f /var/log/squid/access.log
-```
