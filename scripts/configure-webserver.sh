@@ -40,8 +40,9 @@ log "Iniciando configuración del Servidor Web FEI..."
 
 # Variables de configuración
 DOMAIN_NAME="fei.local"
-ADMIN_EMAIL="admin@fei.local"
+ADMIN_EMAIL="admin@fei.loDOMAINcal"
 WEB_ROOT="/var/www/html"
+ROOT_PASS=$(openssl rand -base64 32)
 DB_NAME="fei_db"
 DB_USER="fei_user"
 DB_PASS=$(openssl rand -base64 32)
@@ -85,20 +86,21 @@ systemctl start mariadb
 systemctl enable mariadb
 
 # Configuración segura de MySQL
-mysql -e "UPDATE mysql.user SET Password = PASSWORD('$(openssl rand -base64 32)') WHERE User = 'root'"
-mysql -e "DROP DATABASE IF EXISTS test"
-mysql -e "DELETE FROM mysql.user WHERE User=''"
-mysql -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')"
-mysql -e "FLUSH PRIVILEGES"
+mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$ROOT_PASS'; FLUSH PRIVILEGES;"
+mysql -u root -p$ROOT_PASS -e "DROP DATABASE IF EXISTS test"
+mysql -u root -p$ROOT_PASS -e "DELETE FROM mysql.user WHERE User=''"
+mysql -u root -p$ROOT_PASS -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')"
+mysql -u root -p$ROOT_PASS -e "FLUSH PRIVILEGES"
 
 # Crear base de datos y usuario para la aplicación
-mysql -e "CREATE DATABASE $DB_NAME CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
-mysql -e "CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS'"
-mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'localhost'"
-mysql -e "FLUSH PRIVILEGES"
+mysql -u root -p$ROOT_PASS -e "CREATE DATABASE $DB_NAME CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+mysql -u root -p$ROOT_PASS -e "CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS'"
+mysql -u root -p$ROOT_PASS -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'localhost'"
+mysql -u root -p$ROOT_PASS -e "FLUSH PRIVILEGES"
 
 # Guardar credenciales de BD
 cat > /root/.db_credentials << EOF
+RootPassword: $ROOT_PASS
 Database: $DB_NAME
 Username: $DB_USER
 Password: $DB_PASS
@@ -180,7 +182,7 @@ cat > /etc/apache2/sites-available/fei-web.conf << EOF
     DocumentRoot $WEB_ROOT
     
     # SSL Configuration (se configurará con certbot)
-    SSLEngine on
+    #SSLEngine on
     
     # Logging
     ErrorLog \${APACHE_LOG_DIR}/fei_ssl_error.log
