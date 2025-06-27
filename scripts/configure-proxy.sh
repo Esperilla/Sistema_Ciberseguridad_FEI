@@ -126,8 +126,8 @@ acl localnet src 10.10.30.0/24      # Red de gestión
 
 # ACLs de tiempo - Horarios de acceso
 acl business_hours time MTWHF 08:00-18:00
-acl weekend time Sa 09:00-17:00
-acl sunday time Su 10:00-16:00
+acl weekend time S 09:00-17:00
+acl sunday time S 10:00-16:00
 
 # ACLs de puertos seguros
 acl SSL_ports port 443
@@ -699,6 +699,27 @@ log "Firewall configurado con iptables"
 
 # Inicializar cache de Squid
 log "Inicializando cache de Squid..."
+
+# Detener cualquier instancia previa de Squid
+if systemctl is-active --quiet squid; then
+    log "Deteniendo instancia previa de Squid..."
+    systemctl stop squid
+    sleep 3
+fi
+
+# Verificar y eliminar PID file si existe
+if [ -f /run/squid.pid ]; then
+    warn "Eliminando archivo PID previo..."
+    rm -f /run/squid.pid
+fi
+
+# Limpiar procesos Squid residuales
+if pgrep -f squid > /dev/null; then
+    warn "Eliminando procesos Squid residuales..."
+    pkill -f squid
+    sleep 2
+fi
+
 squid -z
 
 # Verificar configuración de Squid antes de iniciar
@@ -715,9 +736,20 @@ fi
 log "Configurando servicios..."
 systemctl enable squid
 
-# Detener Squid si está corriendo
+# Asegurar que Squid esté completamente detenido
+log "Asegurando que Squid esté completamente detenido..."
 systemctl stop squid 2>/dev/null || true
-sleep 3
+sleep 5
+
+# Verificar y limpiar procesos residuales
+if pgrep -f squid > /dev/null; then
+    warn "Limpiando procesos Squid residuales..."
+    pkill -9 -f squid 2>/dev/null || true
+    sleep 2
+fi
+
+# Limpiar archivos PID
+rm -f /run/squid.pid /var/run/squid.pid 2>/dev/null || true
 
 # Iniciar Squid
 log "Iniciando servicio Squid..."
