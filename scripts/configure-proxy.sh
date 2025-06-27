@@ -44,9 +44,15 @@ apt update && apt upgrade -y
 
 # Instalar Squid y herramientas relacionadas
 log "Instalando Squid y herramientas de filtrado..."
+
+# Verificar y remover UFW si causa conflictos
+if dpkg -l | grep -q "^ii.*ufw"; then
+    warn "UFW detectado. Verificando compatibilidad..."
+fi
+
 apt install -y squid squidguard squid-langpack apache2-utils \
-    fail2ban ufw rsyslog logrotate \
-    curl wget dnsutils net-tools htop
+    fail2ban rsyslog logrotate \
+    curl wget dnsutils net-tools htop openssl
 
 # Configurar red estática
 log "Configurando interfaz de red..."
@@ -73,6 +79,27 @@ echo "127.0.0.1 proxy-fei proxy-fei.fei.local" >> /etc/hosts
 mkdir -p /etc/squid/lists
 mkdir -p /var/log/squid-custom
 mkdir -p /var/cache/squid-custom
+mkdir -p /etc/squid/ssl
+
+# Crear certificado SSL auto-firmado para HTTPS bumping (opcional)
+log "Creando certificado SSL para HTTPS bumping (opcional)..."
+if [ ! -f /etc/squid/ssl/squid.pem ]; then
+    openssl req -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 \
+        -keyout /etc/squid/ssl/squid.key \
+        -out /etc/squid/ssl/squid.crt \
+        -subj "/C=MX/ST=Veracruz/L=Xalapa/O=Universidad Veracruzana/OU=FEI/CN=proxy-fei.fei.local"
+    
+    # Combinar certificado y clave para Squid
+    cat /etc/squid/ssl/squid.crt /etc/squid/ssl/squid.key > /etc/squid/ssl/squid.pem
+    
+    # Configurar permisos
+    chown -R proxy:proxy /etc/squid/ssl
+    chmod 600 /etc/squid/ssl/*
+    
+    log "Certificado SSL creado en /etc/squid/ssl/squid.pem"
+else
+    log "Certificado SSL ya existe"
+fi
 
 # Backup de configuración original
 cp /etc/squid/squid.conf /etc/squid/squid.conf.backup
@@ -89,8 +116,9 @@ http_port 3128
 # Puerto transparente para interceptar tráfico HTTP
 http_port 3129 intercept
 
-# Puerto para HTTPS bump (opcional)
-https_port 3130 cert=/etc/squid/ssl/squid.pem
+# Nota: SSL bumping comentado - requiere configuración adicional de certificados
+# Para habilitar HTTPS bumping, descomentar y configurar certificados:
+# https_port 3130 tls-cert=/etc/squid/ssl/squid.pem tls-key=/etc/squid/ssl/squid.key ssl-bump
 
 # ACLs de red - Definir redes autorizadas
 acl localnet src 10.10.20.0/24      # Red LAN
@@ -634,49 +662,131 @@ log "Configurando tareas programadas..."
 (crontab -l 2>/dev/null; echo "*/5 * * * * /usr/local/bin/proxy-monitor.sh") | crontab -
 (crontab -l 2>/dev/null; echo "0 6 * * * /usr/local/bin/proxy-stats.sh") | crontab -
 
-# Configurar UFW (firewall local)
+# Configurar firewall local con iptables
 log "Configurando firewall local..."
-ufw --force enable
-ufw default deny incoming
-ufw default allow outgoing
-ufw allow from 10.10.20.0/24 to any port 3128
-ufw allow from 10.10.30.0/24 to any port 22
-ufw allow from 10.10.30.0/24 to any port 3128
+
+# Limpiar reglas existentes
+iptables -F INPUT
+iptables -F OUTPUT
+iptables -F FORWARD
+
+# Políticas por defecto
+iptables -P INPUT DROP
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD DROP
+
+# Permitir loopback
+iptables -A INPUT -i lo -j ACCEPT
+
+# Permitir conexiones establecidas
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Permitir SSH desde red de gestión
+iptables -A INPUT -p tcp -s 10.10.30.0/24 --dport 22 -j ACCEPT
+
+# Permitir proxy desde red LAN y gestión
+iptables -A INPUT -p tcp -s 10.10.20.0/24 --dport 3128 -j ACCEPT
+iptables -A INPUT -p tcp -s 10.10.30.0/24 --dport 3128 -j ACCEPT
+
+# Permitir proxy transparente
+iptables -A INPUT -p tcp -s 10.10.20.0/24 --dport 3129 -j ACCEPT
+
+# Guardar reglas de iptables
+if command -v iptables-save &> /dev/null; then
+    iptables-save > /etc/iptables/rules.v4 2>/dev/null || true
+fi
+
+log "Firewall configurado con iptables"
 
 # Inicializar cache de Squid
 log "Inicializando cache de Squid..."
 squid -z
 
+# Verificar configuración de Squid antes de iniciar
+log "Verificando configuración de Squid..."
+if squid -k parse; then
+    log "✓ Configuración de Squid válida"
+else
+    error "✗ Error en configuración de Squid"
+    error "Ejecutar 'squid -k parse' para ver detalles del error"
+    exit 1
+fi
+
 # Configurar y reiniciar servicios
 log "Configurando servicios..."
 systemctl enable squid
-systemctl restart squid
+
+# Detener Squid si está corriendo
+systemctl stop squid 2>/dev/null || true
+sleep 3
+
+# Iniciar Squid
+log "Iniciando servicio Squid..."
+systemctl start squid
+
+# Verificar que inició correctamente
+sleep 5
+if systemctl is-active --quiet squid; then
+    log "✓ Squid iniciado exitosamente"
+else
+    error "✗ Error al iniciar Squid"
+    error "Revisar logs: journalctl -u squid -n 20"
+    systemctl status squid --no-pager
+    exit 1
+fi
+
 systemctl enable fail2ban
 systemctl restart fail2ban
 systemctl restart networking
 
 # Esperar a que Squid inicie completamente
+log "Esperando que Squid inicie completamente..."
 sleep 10
 
-# Verificar funcionamiento
+# Verificar funcionamiento detallado
 log "Verificando funcionamiento del proxy..."
+
+# Verificar puertos
 if netstat -ln | grep -q ":3128 "; then
     log "✓ Squid está escuchando en puerto 3128"
 else
     error "✗ Squid no está escuchando en puerto 3128"
+    error "Revisar configuración y logs de Squid"
 fi
 
+if netstat -ln | grep -q ":3129 "; then
+    log "✓ Puerto transparente 3129 activo"
+else
+    warn "⚠ Puerto transparente 3129 no detectado (normal si no se usa)"
+fi
+
+# Verificar servicio
 if systemctl is-active --quiet squid; then
     log "✓ Servicio Squid está activo"
 else
     error "✗ Servicio Squid no está activo"
+    error "Estado del servicio:"
+    systemctl status squid --no-pager
 fi
 
 # Probar conectividad básica
-if curl -x localhost:3128 -s http://www.google.com > /dev/null; then
-    log "✓ Proxy responde correctamente"
+log "Probando conectividad del proxy..."
+if timeout 10 curl -x localhost:3128 -s http://www.google.com > /dev/null 2>&1; then
+    log "✓ Proxy responde correctamente a solicitudes HTTP"
 else
     warn "⚠ Proxy puede tener problemas de conectividad"
+    warn "Verificar configuración de red y DNS"
+fi
+
+# Verificar logs
+if [ -f /var/log/squid/access.log ] && [ -f /var/log/squid/cache.log ]; then
+    log "✓ Logs de Squid creados correctamente"
+    
+    # Mostrar últimas líneas del log de cache para diagnóstico
+    log "Últimas líneas del log de Squid:"
+    tail -5 /var/log/squid/cache.log
+else
+    warn "⚠ Algunos logs de Squid no se han creado aún"
 fi
 
 # Mostrar información de configuración
