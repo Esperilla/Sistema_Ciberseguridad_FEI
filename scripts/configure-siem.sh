@@ -63,13 +63,13 @@ check_resources
 log "Actualizando sistema..."
 apt update && apt upgrade -y
 
-# Instalar Java 11 (requerido para ELK)
-log "Instalando Java 11..."
-apt install -y openjdk-11-jdk curl wget apt-transport-https gnupg
+# Instalar Java 17 (requerido para ELK)
+log "Instalando Java 17..."
+apt install -y openjdk-17-jdk curl wget apt-transport-https gnupg
 
 # Configurar JAVA_HOME
-echo 'JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> /etc/environment
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+echo 'JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64' >> /etc/environment
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
 
 
