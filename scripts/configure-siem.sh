@@ -65,7 +65,7 @@ apt update && apt upgrade -y
 
 # Instalar Java 17 (requerido para ELK)
 log "Instalando Java 17..."
-apt install -y openjdk-17-jdk curl wget apt-transport-https gnupg
+apt install -y openjdk-17-jdk curl wget apt-transport-https ufw gnupg
 
 # Configurar JAVA_HOME
 echo 'JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64' >> /etc/environment
