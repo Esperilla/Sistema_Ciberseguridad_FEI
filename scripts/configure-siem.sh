@@ -71,22 +71,7 @@ apt install -y openjdk-11-jdk curl wget apt-transport-https gnupg
 echo 'JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> /etc/environment
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
-# Configurar red estática
-log "Configurando interfaz de red..."
-cat > /etc/network/interfaces << 'EOF'
-# Configuración de red para Servidor SIEM FEI
 
-auto lo
-iface lo inet loopback
-
-# Interfaz de gestión
-auto ens33
-iface ens33 inet static
-    address 10.10.30.10
-    netmask 255.255.255.0
-    gateway 10.10.30.1
-    dns-nameservers 8.8.8.8 8.8.4.4
-EOF
 
 # Configurar hostname
 echo "siem-fei" > /etc/hostname
@@ -658,7 +643,7 @@ systemctl enable kibana
 systemctl enable filebeat
 
 # Reiniciar red
-systemctl restart networking
+#systemctl restart networking
 
 # Iniciar servicios en orden
 log "Iniciando servicios ELK..."
