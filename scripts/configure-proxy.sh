@@ -57,8 +57,8 @@ auto lo
 iface lo inet loopback
 
 # Interfaz LAN
-auto ens33
-iface ens33 inet static
+auto ens36
+iface ens36 inet static
     address 10.10.20.10
     netmask 255.255.255.0
     gateway 10.10.20.1
