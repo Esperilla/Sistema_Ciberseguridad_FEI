@@ -116,6 +116,23 @@ install_dependencies() {
     fi
 }
 
+# Configurar red estática
+log "Configurando interfaz de red..."
+cat > /etc/network/interfaces << 'EOF'
+# Configuración de red para Servidor Web FEI
+
+auto lo
+iface lo inet loopback
+
+# Interfaz DMZ
+auto ens36
+iface ens36 inet static
+    address 10.10.10.10
+    netmask 255.255.255.0
+    gateway 10.10.10.1
+    dns-nameservers 8.8.8.8 8.8.4.4
+EOF
+
 # Crear usuario para Cowrie
 create_cowrie_user() {
     log_message "Creando usuario para Cowrie..."
