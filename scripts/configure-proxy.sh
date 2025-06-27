@@ -62,6 +62,10 @@ cat > /etc/network/interfaces << 'EOF'
 auto lo
 iface lo inet loopback
 
+#Principal
+allow-hotplug ens33
+iface ens33 inet dhcp
+
 # Interfaz LAN
 auto ens36
 iface ens36 inet static
