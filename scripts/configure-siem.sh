@@ -41,13 +41,13 @@ check_resources() {
     local ram_mb=$(free -m | awk 'NR==2{printf "%d", $2}')
     local disk_gb=$(df / | awk 'NR==2{printf "%d", $4/1024/1024}')
     
-    if [ $ram_mb -lt 3500 ]; then
-        error "Se requieren al menos 4GB de RAM. Disponible: ${ram_mb}MB"
+    if [ $ram_mb -lt 2048 ]; then
+        error "Se requieren al menos 2GB de RAM. Disponible: ${ram_mb}MB"
         exit 1
     fi
     
-    if [ $disk_gb -lt 20 ]; then
-        error "Se requieren al menos 20GB de espacio libre. Disponible: ${disk_gb}GB"
+    if [ $disk_gb -lt 10 ]; then
+        error "Se requieren al menos 10GB de espacio libre. Disponible: ${disk_gb}GB"
         exit 1
     fi
     
@@ -445,7 +445,23 @@ EOF
 
 # Crear directorios para logs remotos
 mkdir -p /var/log/remote
-chown syslog:adm /var/log/remote
+
+# Verificar y configurar permisos para logs remotos
+if getent passwd syslog >/dev/null 2>&1 && getent group adm >/dev/null 2>&1; then
+    chown syslog:adm /var/log/remote
+    log "✓ Permisos configurados con syslog:adm"
+elif getent passwd syslog >/dev/null 2>&1; then
+    chown syslog:syslog /var/log/remote
+    log "✓ Permisos configurados con syslog:syslog"
+else
+    # Crear usuario syslog si no existe
+    useradd -r -s /bin/false -d /dev/null syslog 2>/dev/null || true
+    chown syslog:syslog /var/log/remote
+    log "✓ Usuario syslog creado y permisos configurados"
+fi
+
+# Asegurar permisos de escritura
+chmod 755 /var/log/remote
 
 # Crear script de configuración inicial de Kibana
 log "Creando script de configuración inicial..."
