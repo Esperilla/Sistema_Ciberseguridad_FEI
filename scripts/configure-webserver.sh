@@ -56,7 +56,7 @@ log "Instalando LAMP Stack y herramientas de seguridad..."
 apt install -y apache2 mariadb-server php php-mysql php-cli php-curl \
     php-gd php-mbstring php-xml php-zip libapache2-mod-php \
     fail2ban ufw certbot python3-certbot-apache \
-    clamav clamav-daemon rkhunter chkrootkit \
+    rkhunter chkrootkit \
     logwatch rsyslog unattended-upgrades
 
 # Configurar red estática
@@ -629,12 +629,6 @@ Unattended-Upgrade::Automatic-Reboot "false";
 Unattended-Upgrade::Automatic-Reboot-Time "02:00";
 EOF
 
-# Configurar ClamAV
-log "Configurando antivirus ClamAV..."
-systemctl enable clamav-daemon
-systemctl start clamav-daemon
-freshclam
-
 # Crear script de monitoreo
 log "Creando script de monitoreo..."
 cat > /usr/local/bin/web-monitor.sh << 'EOF'
@@ -658,7 +652,7 @@ send_alert() {
 
 # Verificar servicios
 check_services() {
-    services=("apache2" "mariadb" "fail2ban" "clamav-daemon")
+    services=("apache2" "mariadb" "fail2ban")
     for service in "${services[@]}"; do
         if ! systemctl is-active --quiet $service; then
             send_alert "Servicio $service no está activo"
