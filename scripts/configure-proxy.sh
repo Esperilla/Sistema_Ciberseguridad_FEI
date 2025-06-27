@@ -126,8 +126,8 @@ acl localnet src 10.10.30.0/24      # Red de gestión
 
 # ACLs de tiempo - Horarios de acceso
 acl business_hours time MTWHF 08:00-18:00
-acl weekend time SA 09:00-17:00
-acl sunday time SU 10:00-16:00
+acl weekend time Sa 09:00-17:00
+acl sunday time Su 10:00-16:00
 
 # ACLs de puertos seguros
 acl SSL_ports port 443
@@ -233,7 +233,6 @@ request_header_access Cache-Control deny all
 # === CONFIGURACIÓN DE RENDIMIENTO ===
 
 # Límites de conexión
-http_access_log_limit 100
 client_lifetime 1 hour
 half_closed_clients off
 
